@@ -84,7 +84,10 @@ Route::post('appointments-status-update', [DoctorDashboardController::class, 'ap
 Route::get('appointments/{id}', [DoctorDashboardController::class, 'appointmentDelete'])->name('appointmentDelete');
 Route::get('my-patient', [DoctorDashboardController::class, 'myPatient'])->name('my-patient.myPatient');
 Route::resource('schedule-timing', ScheduleTimingController::class);
-// Route::delete('/schedule-timing/{id}', [ScheduleTimingController::class, 'destroy'])->name('schedule-timing.Destroy');
+// Route::delete('schedule-timing/{id}', [ScheduleTimingController::class, 'delete'])->name('schedule-timing.destroy');
+
+
+// Route::post('/schedule-timing/{id}', [ScheduleTimingController::class, 'Delete'])->name('schedule-timing.Destroy');
 
 
 

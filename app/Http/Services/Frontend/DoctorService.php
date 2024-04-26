@@ -127,8 +127,7 @@ class DoctorService implements DoctorContract
 
     private function prepareData($model, $data, $newRecord = false)
     {
-        dd($data);
-        $keysToSet = ['user_id', 'depart_id', 'specialist', 'fee', 'clinic_address', 'about', 'experience', 'slug'];
+$keysToSet = ['user_id', 'depart_id', 'specialist', 'fee', 'clinic_address', 'about', 'experience', 'slug'];
         foreach ($keysToSet as $key) {
             if (isset($data[$key]) && $data[$key]) {
                 $model->$key = $data[$key];

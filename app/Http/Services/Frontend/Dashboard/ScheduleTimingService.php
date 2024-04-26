@@ -58,13 +58,33 @@ class ScheduleTimingService implements ScheduleTimingContract
     }
     public function update($request)
     {
+        $update = $this->dayTimeModel->find($request['appointID']);
+        if(!$update){
+            throw new CustomException('TIme Schedule id is not found!');
+        }
+
+        return $this->prepareData($update,$request);
 
     }
-    public function destroy($id)
+
+    public function destroy($request)
     {
-        dd($id);
-
+        $data = $this->dayTimeModel->find($request);
+        if($data){
+            $data->delete();
+        }
     }
 
+
+    private function prepareData($model, $data)
+    {
+        foreach($data['start_time'] as $key =>$time){
+            $model->start_time = $time;
+            $model->day = $data['day'][$key];
+            $model->end_time = $data['end_time'][$key];
+        }
+        $model->duration = $data['duration'];
+        $model->save();
+    }
 
 }

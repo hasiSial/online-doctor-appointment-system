@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Frontend\ScheduleTimeRequest;
 use App\Contracts\Frontend\Dashboard\ScheduleTimingContract;
 
 class ScheduleTimingController extends Controller
@@ -59,7 +60,6 @@ class ScheduleTimingController extends Controller
 
     public function edit($id)
     {
-        dd($id);
         try{
             $data = $this->scheduleTimingAppointment->edit($id);
             return view('frontend.Doctor.Dashboard.Schedule-Timings.edit',compact('data'));
@@ -71,23 +71,33 @@ class ScheduleTimingController extends Controller
         }
     }
 
-    public function update()
-    {
 
+    public function update(ScheduleTimeRequest $request)
+    {
+        try{
+            $data = $this->scheduleTimingAppointment->update($request->prepareRequest());
+            return redirect()->back()->with('message','Appointment Schedule Timing Update Successfully!');
+        }catch (CustomException $th) {
+            return redirect()->back()->with('message', $th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage('ScheduleTimingController-update()', null, $th->getMessage());
+            return redirect()->back()->with('message', 'Something went wrong!');
+        }
     }
 
-    public function destroy($id)
+    public function destroy($request)
     {
-        dd($id);
         try{
-            $data = $this->scheduleTimingAppointment->destroy($id);
+            $data = $this->scheduleTimingAppointment->destroy($request);
             return redirect()->back()->with('message','Appointment Schedule Time Delete Succesfully!');
         }catch (CustomException $th) {
             return redirect()->back()->with('message', $th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage('ScheduleTimingController-edit()', null, $th->getMessage());
+            Helper::logMessage('ScheduleTimingController-destroy()', null, $th->getMessage());
             return redirect()->back()->with('message', 'Something went wrong!');
         }
     }
+
+
 
 }

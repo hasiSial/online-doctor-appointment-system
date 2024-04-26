@@ -13,5 +13,6 @@ interface ScheduleTimingContract
     public function show($id);
     public function edit($id);
     public function update($request);
-    public function destroy($id);
+    public function destroy($request);
+
 }

@@ -58,6 +58,29 @@
         });
     });
 
+    //remove schedule time ajax
+    $(document).ready(function() {
+        $('.removeBtn').on('click', function() {
+            var appoint_id = $(this).data('appointid');
+
+            $.ajax({
+                url: '/schedule-timing/' + appoint_id
+                , type: 'DELETE'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                , success: function(response) {
+                    console.log(response);
+                    // window.location.reload();
+                }
+                , error: function(xhr, status, error) {
+                    console.log(error)
+                }
+            });
+        });
+
+    });
+
 </script>
 
 @endsection
